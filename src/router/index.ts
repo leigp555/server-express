@@ -1,8 +1,6 @@
-import {Request, Response} from "express";
-
 const express=require('express')
+//总路由
 const router=express.Router()
-
 //用户相关
 router.use(require("./user"))
 //用户资料相关

@@ -1,28 +1,12 @@
 import {NextFunction, Request, Response} from "express";
 const express=require('express')
 const router=express.Router()
+const controlProfile=require("../controller/profile")
 //获取指定用户资料
-router.get('/:username',async(req:Request, res:Response,next:NextFunction) => {
-    try{
-        res.send("获取指定用户资料")
-    }catch (err) {
-        next(err)
-    }
-})
-//关注用户
-router.post('/:username/flower',async(req:Request, res:Response,next:NextFunction) => {
-    try{
-        res.send("关注用户")
-    }catch (err) {
-        next(err)
-    }
-})
-//取消关注用户
-router.delete('/:username/flower',async(req:Request, res:Response,next:NextFunction) => {
-    try{
-        res.send("取消关注用户")
-    }catch (err) {
-        next(err)
-    }
-})
+router.get('/:username',controlProfile.getUserSource)
+//修改用户资料
+router.post('/:username/flower',controlProfile.modifyUserprofile)
+//删除用户资料
+router.delete('/:username/flower',controlProfile.deleteUserprofile)
+
 module .exports=router
