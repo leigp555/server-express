@@ -12,3 +12,5 @@ router.post('/:articleId',controlArticle.createArticle)
 router.put('/:articleId',controlArticle.modifyArticle)
 //删除文章
 router.delete('/:articleId',controlArticle.deleteArticle)
+
+module .exports=router

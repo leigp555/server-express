@@ -4,6 +4,7 @@ import {NextFunction, Request, Response} from "express";
 //登录
 exports.login=async(req:Request, res:Response,next:NextFunction) => {
     try{
+        console.log(JSON.parse("fsfhsfj"))
         res.send("登录成功")
     }catch (err) {
         next(err)

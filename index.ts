@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const morgan=require('morgan')
 const cors=require('cors')
 const router=require('./src/router/index')
-
+const errorHandle=require("./src/middleware/error-handle")
 const PORT=process.env.PORT||8000
 const app=express()
 app.use(morgan('dev'))    //日志
@@ -18,7 +18,7 @@ async function main() {
 main().then(()=>{console.log("连接数据库成功")}).catch(err => console.log(err));
 
 app.use('/api',router)
-
+app.use(errorHandle())
 //监听端口
 app.listen(PORT,()=>{
     console.log(`Server is running at http://localhost:${PORT}`)

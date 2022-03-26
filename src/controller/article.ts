@@ -13,7 +13,7 @@ exports.getArticle=async (req:Request, res:Response,next:NextFunction) => {
 //创建文章
 exports.createArticle=async(req:Request, res:Response,next:NextFunction) => {
     try{
-        res.send("获取文章")
+        res.send("创建文章")
     }catch (err) {
         next(err)
     }
@@ -21,7 +21,7 @@ exports.createArticle=async(req:Request, res:Response,next:NextFunction) => {
 //修改文章
 exports.modifyArticle=async(req:Request, res:Response,next:NextFunction) => {
     try{
-        res.send("获取文章")
+        res.send("修改文章")
     }catch (err) {
         next(err)
     }
@@ -29,7 +29,7 @@ exports.modifyArticle=async(req:Request, res:Response,next:NextFunction) => {
 //删除文章
 exports.deleteArticle=async(req:Request, res:Response,next:NextFunction) => {
     try{
-        res.send("获取文章")
+        res.send("删除文章")
     }catch (err) {
         next(err)
     }
