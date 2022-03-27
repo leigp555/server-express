@@ -1,5 +1,5 @@
 import * as mongoose from "mongoose";
-
+const md5=require('../util/md5')
 const userSchema = new mongoose.Schema({                                 //建表
     "username": {
         type: String,
@@ -11,7 +11,9 @@ const userSchema = new mongoose.Schema({                                 //建�
     },
     "password": {
         type: String,
-        required: true
+        required: true,
+        set:(value:string) => md5('lgp'+value),
+        select:false
     },
     "bio": {
         type:String,

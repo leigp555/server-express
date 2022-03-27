@@ -1,13 +1,17 @@
 import {NextFunction, Request, Response} from "express";
 import {userType} from "../type.d.ts";
+import {body} from "express-validator";
 const {User} =require('../model/index')
 
 //用户处理
 //登录
 exports.login=async(req:Request, res:Response,next:NextFunction) => {
+    console.log(req.body)
     try{
-
-        res.send("登录成功")
+        res.json({
+            msg:"登陆成功",
+            email:req.body.user.email,
+        })
     }catch (err) {
         next(err)
     }
@@ -16,10 +20,11 @@ exports.login=async(req:Request, res:Response,next:NextFunction) => {
 //注册
 exports.register=async(req:Request, res:Response,next:NextFunction) => {
     const reqDate=req.body.user as userType
-    console.log(reqDate)
     try{
-        const user= new User(reqDate)
+        let user= new User(reqDate)
         await user.save()
+        user=user.toJSON(user)     //删除mongo返回的数据必须要用它提供的方法toJSON
+        delete user.password
         res.status(201).json({
             user
         })
