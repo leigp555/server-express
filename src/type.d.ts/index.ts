@@ -7,3 +7,8 @@ export interface userType {
     "createAt": Date,
     "updatedAt": Date,
 }
+
+export interface articleFilter{
+    tagList?:string[],
+    author?:string
+}
