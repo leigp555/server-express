@@ -1,16 +1,23 @@
 import {NextFunction, Request, Response} from "express";
 import {userType} from "../type.d.ts";
-import {body} from "express-validator";
 const {User} =require('../model/index')
-
+const jwt=require('../util/jwt')
+const {jwtSecret}=require('../config/default.config')
 //用户处理
 //登录
 exports.login=async(req:Request, res:Response,next:NextFunction) => {
-    console.log(req.body)
     try{
+        //生成token
+        //@ts-ignore
+        const user=req.user.toJSON()
+        delete user.password
+        const token=await jwt.sign({
+            userId:user._id
+        },jwtSecret,{ expiresIn: "1d"})
         res.json({
             msg:"登陆成功",
-            email:req.body.user.email,
+            ...user,
+            token
         })
     }catch (err) {
         next(err)
@@ -32,10 +39,13 @@ exports.register=async(req:Request, res:Response,next:NextFunction) => {
         next(err)
     }
 }
-//更新用户
-exports.update=async(req:Request, res:Response,next:NextFunction) => {
+//获取当前用户信息
+exports.currentUser=async(req:Request,res:Response,next:NextFunction) => {
     try{
-        res.send("更新成功")
+        res.status(200).json({
+            // @ts-ignore
+            user:req.user
+        })
     }catch (err) {
         next(err)
     }

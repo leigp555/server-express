@@ -1,25 +1,23 @@
 import * as mongoose from "mongoose";
+const Schema=mongoose.Schema
 
 const articleSchema = new mongoose.Schema({                                 //建表
-    "username": {
+    "title": {
         type: String,
         required: true
     },
-    "email": {
+    "body": {
         type: String,
         required: true
     },
-    "password": {
-        type: String,
-        required: true
+    "author": {
+        type: Schema.Types.ObjectId,
+        ref:"User",
+        required:true
     },
-    "bio": {
-        type: String,
-        default: null
-    },
-    "img": {
-        type: String,
-        default: null
+    "favorite": {
+        type: Boolean,
+        default: false
     },
     "createAt": {
         type: Date,
@@ -29,6 +27,6 @@ const articleSchema = new mongoose.Schema({                                 //�
         type: Date,
         default: Date.now
     },
-});
+})
 
 module.exports = articleSchema

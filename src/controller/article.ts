@@ -1,10 +1,16 @@
 import {NextFunction, Request, Response} from "express";
-
+const {Article}=require('../model/index')
 //文章处理
 //获取文章
 exports.getArticle=async (req:Request, res:Response,next:NextFunction) => {
     try{
-        res.send("获取文章")
+        const article=await Article.findById(req.params.articleId).populate("author")
+        if(!article){
+            res.status(404).json({msg:'没有对应的内容'})
+        }
+        res.status(200).json({
+            article
+        })
     }catch (err) {
         next(err)
     }
@@ -13,7 +19,16 @@ exports.getArticle=async (req:Request, res:Response,next:NextFunction) => {
 //创建文章
 exports.createArticle=async(req:Request, res:Response,next:NextFunction) => {
     try{
-        res.send("创建文章")
+        const article=new Article(req.body.article)
+        // @ts-ignore
+        article.author=req.user._id
+        article.populate("author")
+        // article.populate(['author'])
+        // article.populated('author')
+        await article.save()
+        res.status(200).json({
+            article
+        })
     }catch (err) {
         next(err)
     }
