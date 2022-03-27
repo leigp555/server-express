@@ -19,6 +19,10 @@ const articleSchema = new mongoose.Schema({                                 //å»
         type: Boolean,
         default: false
     },
+    "tagList": {
+        type: Array,
+        default: []
+    },
     "createAt": {
         type: Date,
         default: Date.now

@@ -53,8 +53,12 @@ exports.deleteArticle = async (req: Request, res: Response, next: NextFunction) 
 
 exports.articleList = async (req: Request, res: Response, next: NextFunction) => {
     try {
-        const {limit = 5, offset = 0} = req.query
-        const articles = await Article.find()              //查询条件
+        const {limit = 5, offset = 0,tag} = req.query
+        const filter:{tagList?:string[]} = {};
+        if(tag){
+            filter.tagList=tag as string[]
+        }
+        const articles = await Article.find(filter)              //查询条件
             .skip(parseInt((offset as string)))                                      //跳过多少条类型要转成number
             .limit(parseInt((limit as string)))                                     //取多少条类型要转成number
         const articlesCount = await Article.countDocuments()   //总条数
