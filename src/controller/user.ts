@@ -1,10 +1,12 @@
 import {NextFunction, Request, Response} from "express";
+import {userType} from "../type.d.ts";
+const {User} =require('../model/index')
 
 //用户处理
 //登录
 exports.login=async(req:Request, res:Response,next:NextFunction) => {
     try{
-        console.log(JSON.parse("fsfhsfj"))
+
         res.send("登录成功")
     }catch (err) {
         next(err)
@@ -13,8 +15,14 @@ exports.login=async(req:Request, res:Response,next:NextFunction) => {
 
 //注册
 exports.register=async(req:Request, res:Response,next:NextFunction) => {
+    const reqDate=req.body.user as userType
+    console.log(reqDate)
     try{
-        res.send("注册成功")
+        const user= new User(reqDate)
+        await user.save()
+        res.status(201).json({
+            user
+        })
     }catch (err) {
         next(err)
     }
